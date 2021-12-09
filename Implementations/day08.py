@@ -19,17 +19,17 @@ def part2(lines: List[str]):
         t = signals[1] - signals[0]
 
         for signal in signals[6:-1]:
-            if (signals[2] | t).issubset(signal):
+            if (signals[2] | t) < signal:
                 b = signal - (signals[2] | t)
         bl = signals[-1] - (signals[2] | t | b)
 
         for signal in signals[6:-1]:
-            if (signals[1] | b | bl).issubset(signal):
+            if (signals[1] | b | bl) < signal:
                 tl = signal - (signals[1] | b | bl)
         m = signals[2] - (signals[0] | tl)
 
         for signal in signals[3:6]:
-            if tl.issubset(signal):
+            if tl < signal:
                     br = signal - (t | tl | m | b)
 
         tr = signals[0] - br
