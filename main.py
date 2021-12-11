@@ -1,5 +1,6 @@
 import os
 import argparse
+import requests
 import importlib
 from timeit import default_timer as timer
 
@@ -8,18 +9,27 @@ if __name__ == "__main__":
 
     parser.add_argument("day", type=int)
     parser.add_argument("-t", "--test", action="store_true", dest="run_test", default=False)
+    parser.add_argument("-sID","--sessionID", type=str, dest="sessionID", default="")
 
     args = parser.parse_args()
-
+    
     input_path = os.path.join(".", "Inputs", f"input_{args.day:02}.txt")
     test_path = os.path.join(".", "test.txt")
 
+    if not os.path.exists(input_path):
+        url = f"https://adventofcode.com/2021/day/{args.day}/input"
+        c = {'session': os.environ.get("AoC_SESSION", args.sessionID)}
+        h = {'User-Agent': 'Mozilla/5.0'}
+
+        with open(input_path, "w") as file:
+            file.write(requests.get(url, cookies=c, headers=h).text)
+
     if args.run_test:
         with open(test_path) as file:
-            lines = [line.strip() for line in file.readlines()]
+            lines = [line.strip() for line in file.readlines() if len(line) > 0]
     else:
         with open(input_path) as file:
-            lines = [line.strip() for line in file.readlines()]
+            lines = [line.strip() for line in file.readlines() if len(line) > 0]
 
     impl = importlib.import_module(f"Implementations.day{args.day:02}")
 
