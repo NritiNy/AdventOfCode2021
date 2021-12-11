@@ -21,8 +21,13 @@ if __name__ == "__main__":
         c = {'session': os.environ.get("AoC_SESSION", args.sessionID)}
         h = {'User-Agent': 'Mozilla/5.0'}
 
-        with open(input_path, "w") as file:
-            file.write(requests.get(url, cookies=c, headers=h).text)
+        r = requests.get(url, cookies=c, headers=h)
+        if r.status_code == 200:
+            with open(input_path, "w") as file:
+                file.write(r.text)
+        else:
+            print(f"Failed to download input (Status {r.status_code}).")
+            exit()
 
     if args.run_test:
         with open(test_path) as file:
