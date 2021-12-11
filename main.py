@@ -19,9 +19,8 @@ if __name__ == "__main__":
     if not os.path.exists(input_path):
         url = f"https://adventofcode.com/2021/day/{args.day}/input"
         c = {'session': os.environ.get("AoC_SESSION", args.sessionID)}
-        h = {'User-Agent': 'Mozilla/5.0'}
 
-        r = requests.get(url, cookies=c, headers=h)
+        r = requests.get(url, cookies=c)
         if r.status_code == 200:
             with open(input_path, "w") as file:
                 file.write(r.text)
