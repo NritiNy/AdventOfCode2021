@@ -38,7 +38,7 @@ if __name__ == "__main__":
     impl = importlib.import_module(f"Implementations.day{args.day:02}")
 
     s = timer()
-    print(f"Part 01: {impl.part1(lines)} \t in {timer() - s:.06f}s")
+    print(f"Part 01: {impl.part1(lines):<20d} \t in {timer() - s:.06f}s")
     s = timer()
-    print(f"Part 02: {impl.part2(lines)} \t in {timer() - s:.06f}s")
+    print(f"Part 02: {impl.part2(lines):<20d} \t in {timer() - s:.06f}s")
 
